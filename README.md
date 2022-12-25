@@ -12,9 +12,10 @@ Las principales conclusiones son las siguientes:
 </p>
 
 <p align="center">
-  <img src="figures/wordcloud-keywords.png" width="700">
+  <img src="figures/barh-authors.png" width="700">
 </p>
 
+## Palabras más usadas en títulos
 <p align="center">
-  <img src="figures/barh-authors.png" width="700">
+  <img src="figures/wordcloud-keywords.png" width="700">
 </p>
