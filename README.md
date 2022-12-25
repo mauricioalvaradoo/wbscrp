@@ -1,5 +1,10 @@
 # Web Scraping al Journal of Macroeconomics
-Extracción y visualización de los datos de todas las publicaciones en el Journal of Macroeconomics.
+Extracción y visualización de los datos de todas las publicaciones en el Journal of Macroeconomics. Se obtuvieron links, años, nombres de autores, papers y volumenes mediante las libreerías `bs4` y `selenium`.
+
+Las principales conclusiones son las siguientes:
+1. La tendencia de las publicaciones se mantuvo alrededor de una media de 40 artículos por año desde el año 1979 a 2007. En 2008 hubo la mayor cantidad de publicaciones: 108. Tras dicho año, la media estuvo próxima a 80 artículos por año, aunque se redujo a 60 entre el 2019 al 2022.
+2. Las palabras más usadas dentro de los títulos son ‘policy’ (336), ‘growth’ (299), ‘monetary’ (292). Con ello, se encontró que la palabra ‘policy’ y ‘monetary’ mantuvieron una media de 4 y 3, respectivamente, hasta los años 2003. En el 2004, se presentó un aumento muy acelerado en presencia de estas palabras. Este resultado puede ser atribuido a la adopción de políticas de metas de inflación que varios países comenzaron a adoptar durante dichos años. A partir de dicho año, la tendencia fue creciente durante el 2005 al 2016, y luego comenzó a decaer.
+3. Los autores con más publicaciones son S. Apostolos, D. Smyth, Pierre-Richard Agénor, y A. Finnigan con 14, 12, 9 y 9 artículos, respectivamente. Apostolos es un economista y profesor griego nacido en 1954. David J. Smyth, por su parte, es uno de los fundadores del Journal of Macroeconomics.
 
 <p align="center">
   <img src="figures/bar-publicaciones-year.png" width="500">
@@ -12,7 +17,3 @@ Extracción y visualización de los datos de todas las publicaciones en el Journ
 <p align="center">
   <img src="figures/barh-authors.png" width="500">
 </p>
-
-
-
-Se extraerá links, años, nombres de autores, papers y volumenes. Se usará las librerías `bs4`, `selenium`, `pandas`.
