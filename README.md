@@ -6,14 +6,15 @@ Las principales conclusiones son las siguientes:
 2. Las palabras más usadas dentro de los títulos son ‘policy’ (336), ‘growth’ (299), ‘monetary’ (292). Con ello, se encontró que la palabra ‘policy’ y ‘monetary’ mantuvieron una media de 4 y 3, respectivamente, hasta los años 2003. En el 2004, se presentó un aumento muy acelerado en presencia de estas palabras. Este resultado puede ser atribuido a la adopción de políticas de metas de inflación que varios países comenzaron a adoptar durante dichos años. A partir de dicho año, la tendencia fue creciente durante el 2005 al 2016, y luego comenzó a decaer.
 3. Los autores con más publicaciones son S. Apostolos, D. Smyth, Pierre-Richard Agénor, y A. Finnigan con 14, 12, 9 y 9 artículos, respectivamente. Apostolos es un economista y profesor griego nacido en 1954. David J. Smyth, por su parte, es uno de los fundadores del Journal of Macroeconomics.
 
+## Figuras
 <p align="center">
-  <img src="figures/bar-publicaciones-year.png" width="500">
+  <img src="figures/bar-publicaciones-year.png" width="700">
 </p>
 
 <p align="center">
-  <img src="figures/wordcloud-keywords.png" width="500">
+  <img src="figures/wordcloud-keywords.png" width="700">
 </p>
 
 <p align="center">
-  <img src="figures/barh-authors.png" width="500">
+  <img src="figures/barh-authors.png" width="700">
 </p>
