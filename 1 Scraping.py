@@ -1,29 +1,29 @@
 ## Web Scraping en el Journal of Macroeconomics
-# El objetivo es vincularme con la p谩gina web del Journal of Macroeconomics para extraer la
+# El objetivo es vincularme con la p醙ina web del Journal of Macroeconomics para extraer la
 # informacion de cada volumen, los articulos de cada uno, los autores, los links, entre otros.
 # Voy a trabajar con un entorno virtual llamado `env`. El Driver de Chrome se puede descargar
 # en https://sites.google.com/chromium.org/driver/downloads
 
 
 import pandas as pd
-from functions import get_html, get_volumens, get_articles, get_components
+import utils
 
 import warnings
 warnings.simplefilter("ignore")
 
 
-## Vinculaci贸n al Journal of Macroeconomics y obtenci贸n de HTML ======================
+## Vinculaci髇 al Journal of Macroeconomics y obtenci髇 de HTML ===============
 url_1 = "https://www.sciencedirect.com/journal/journal-of-macroeconomics/issues?page=1"
 url_2 = "https://www.sciencedirect.com/journal/journal-of-macroeconomics/issues?page=2"
 url_3 = "https://www.sciencedirect.com/journal/journal-of-macroeconomics/issues?page=3"
-page_1 = get_html(url_1)
-page_2 = get_html(url_2)
-page_3 = get_html(url_3) # time: 2 minutos
+page_1 = utils.get_html(url_1)
+page_2 = utils.get_html(url_2)
+page_3 = utils.get_html(url_3) # time: 2 minutos
 
-## Extracci贸n de HTML a informaci贸n de vol煤menes =====================================
-names_1, urls_1, dates_1 = get_volumens(page_1)
-names_2, urls_2, dates_2 = get_volumens(page_2)
-names_3, urls_3, dates_3 = get_volumens(page_3)
+## Extracci髇 de HTML a informaci髇 de vol鷐enes ==============================
+names_1, urls_1, dates_1 = utils.get_volumens(page_1)
+names_2, urls_2, dates_2 = utils.get_volumens(page_2)
+names_3, urls_3, dates_3 = utils.get_volumens(page_3)
 
 names = names_1 + names_2 + names_3
 urls = urls_1 + urls_2 + urls_3
@@ -36,30 +36,31 @@ dta_volumens = pd.DataFrame({
 })
 
 
-## Obtenci贸n de art铆culos en cada volumen =============================================
+## Obtenci髇 de art韈ulos en cada volumen =====================================
 urls = dta_volumens["volume_url"] # time: 50 minutos
-articles = get_articles(urls)
+articles = utils.get_articles(urls)
 
 dta_articles = pd.DataFrame(
     articles, columns=["volume_url", "article_name", "article_url"]
 )
 
-## Obtenci贸n de informaci贸n de cada uno de los art铆culos ==============================
+## Obtenci髇 de informaci髇 de cada uno de los art憝culos ======================
 urls = dta_articles["article_url"]  # time: 18 horas
-components = get_components(urls)
+components = utils.get_components(urls)
 
 dta_components = pd.DataFrame(
-    components, columns=["article_url", "authors", "doi", "keywords"]
+    components, columns=["article_url", "authors", "doi"]
 )
 
 
-## Modificaci贸n final de los datos: se elimina los keywords ============================
+## Modificaci髇 final de los datos ============================================
 dta = dta_components.merge(dta_articles, how="inner").merge(dta_volumens, how="inner")
 
 dta["article_url"] = "https://www.sciencedirect.com" + dta["article_url"].astype(str)
 dta["volume_url"] = "https://www.sciencedirect.com" + dta["volume_url"].astype(str)
 
-dta_f = dta[["article_name", "authors", "article_url", "doi", "volume_name", "volume_date", "volume_url"]]
+dta_f = dta[["article_name", "authors", "article_url", "doi", "volume_name",
+             "volume_date", "volume_url"]]
 dta_f[0:10]
 
 

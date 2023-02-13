@@ -2,53 +2,47 @@
 ## Limpieza de los datos
 
 # !pip install wordcloud
+# import nltk
+# nltk.download('stopwords')
+
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.ticker as ticker
 from wordcloud import WordCloud
-import seaborn as sns
+
 import re
+from nltk.corpus import stopwords
+stops = set(stopwords.words('english'))
 
 import warnings
 warnings.simplefilter("ignore")
 
 
-dta = pd.read_csv(
-    "./data/dta.csv", delimiter=";", index_col="Unnamed: 0",
-    usecols=["Unnamed: 0","article_name", "authors", "volume_name", "volume_date"]
-)
-
+dta = pd.read_pickle("./data/dta.pkl")
 dta.head()
 
 
-## Correcciones ===========================================================================
-dta.drop(dta[dta["authors"] == "[]"].index, inplace=True)
+## Correcciones ===============================================================
+dta.dropna(axis=0, inplace=True)
 dta["volume_date"] = dta["volume_date"].str.replace(r'[^(]*\(|\)[^)]*', '')
 dta["volume_name"] = dta["volume_name"].str.split(',').str[0]
 dta["year"] = dta["volume_date"].str.split().str[-1]
-dta["authors"] = dta["authors"].str[1:]
-dta["authors"] = dta["authors"].str[:-1]
-dta["authors"] = dta["authors"].str.replace("'", "")
+# dta["authors"] = dta["authors"].str[1:]
+# dta["authors"] = dta["authors"].str[:-1]
+# dta["authors"] = dta["authors"].str.replace("'", "")
 
 
-## Creación de Keywords ===================================================================
+## Creación de Keywords =======================================================
 dta["keywords"] = dta["article_name"].str.lower()
 
 # Eliminar palabras
-words = [
-    "in", "a", "the", "of", "as", "with", "its",
-    "their", "and", "vs.", "non", "for", "is",
-    "from", "an", "to", "on", "or", "are", "can",
-    "at", "do", "does", "by"
-]
-
-dta["keywords"] = dta["keywords"].str.replace(r"\s*(?<!\w)(?:{})(?!\w)".format("|".join([re.escape(x) for x in words])), " ")
+dta["keywords"] = dta["keywords"] \
+    .str.replace(r"\s*(?<!\w)(?:{})(?!\w)"
+                 .format("|".join([re.escape(x) for x in stops])), " ")
 
 # Eliminar caracteres
-characters = [
-    ":", ",", ".", ";", '“','”',"'"
-]
+characters = [":", ",", ".", ";", '“','”',"'"]
 
 for c in characters:
     dta["keywords"] = dta["keywords"].str.replace(c, '')
@@ -63,7 +57,7 @@ dta.drop(["article_name"], axis=1, inplace=True)
 
 
 
-## Estadísticas =============================================================================
+## Estadísticas ===============================================================
 print(f"Filas: {dta.shape[0]}\nColumnas:{dta.shape[1]}")
 
 
@@ -83,14 +77,14 @@ print(dta[["year"]].value_counts()[0:10])
 
 
 
-## Visualización ===========================================================================
+## Visualización ==============================================================
 ### Cantidad de publicaciones por año
 publication_per_year = dta[["year", "volume_date"]].groupby("year").count()
 colors = ["red" if index == "2008" else "gray" for index in publication_per_year.index]
 
 fig, ax = plt.subplots(figsize=(10,5))
 fig = plt.bar(
-    x=publication_per_year.index, height=publication_per_year.volumen_date,
+    x=publication_per_year.index, height=publication_per_year.volume_date,
     color=colors, alpha=0.5
 )
 
@@ -109,7 +103,10 @@ plt.show()
 ### Wordcloud: Palabras más usadas
 words_per_year = dta.explode("keywords")[["year", "keywords"]]
 text = words_per_year["keywords"].value_counts().to_dict()
-wordcloud = WordCloud(width=1600, height=800, max_font_size=150, max_words=200, background_color="white").generate_from_frequencies(text)
+wordcloud = WordCloud(
+    width=1600, height=800, max_font_size=150, max_words=200,
+    background_color="white"
+).generate_from_frequencies(text)
 
 plt.figure(figsize=(10,5), facecolor='k')
 plt.imshow(wordcloud, interpolation="bilinear")

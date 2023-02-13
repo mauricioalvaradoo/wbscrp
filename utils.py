@@ -150,8 +150,7 @@ def get_components(urls):
     Nombre: `span`, `text given-name`
     Apellido: `span`, `text surname`
     Doi: `a`, `doi`
-    Keyword: `div`, `keyword`
-
+    
 
     Parametros
     ----------
@@ -162,7 +161,7 @@ def get_components(urls):
     Retorno
     -------
     list_components: list
-        Lista con cuatro elementos: url de articulo, nombres de autores, codigo doi, keywords
+        Lista con cuatro elementos: url de articulo, nombres de autores, codigo doi
 
     """""
 
@@ -176,20 +175,19 @@ def get_components(urls):
         try:
             # Elementos
             doi = soup.find("a", {"class": "doi"}).get("href")
-            keywords = soup.find_all("div", {"class": "keyword"})
-            group_authors = soup.find_all("a", {"class": "author size-m workspace-trigger"})
+            group_authors = soup.find_all("button", {"class": "button-link workspace-trigger button-link-primary"})
 
             list_authors = []
 
             for authors in group_authors:
-                name = authors.find("span", {"class": "text given-name"}).text
+                name = authors.find("span", {"class": "given-name"}).text
                 surname = authors.find("span", {"class": "text surname"}).text
 
-                author = f"[{surname}, {name}]"
+                author = f"{surname}, {name}"
                 list_authors.append(author)
 
             # Union
-            list_components.append([i, list_authors, doi, keywords])
+            list_components.append([i, list_authors, doi])
         except:
             pass
 
