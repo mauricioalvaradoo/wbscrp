@@ -8,14 +8,14 @@ Las principales conclusiones son las siguientes:
 
 ## Figuras
 <p align="center">
-  <img src="figures/bar-publicaciones-year.eps" width="700">
+  <img src="figures/bar-publicaciones-year.png" width="700">
 </p>
 
 <p align="center">
-  <img src="figures/barh-authors.eps" width="700">
+  <img src="figures/barh-authors.png" width="700">
 </p>
 
 ## Palabras más usadas en títulos
 <p align="center">
-  <img src="figures/wordcloud-keywords.eps" width="700">
+  <img src="figures/wordcloud-keywords.png" width="700">
 </p>
