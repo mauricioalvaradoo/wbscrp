@@ -1,59 +1,18 @@
 ## Web Scraping en el Journal of Macroeconomics
-## Limpieza de los datos
-
-# !pip install wordcloud
-# import nltk
-# nltk.download('stopwords')
 
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.ticker as ticker
-from wordcloud import WordCloud
 
-import re
-from nltk.corpus import stopwords
-stops = set(stopwords.words('english'))
+# !pip install wordcloud
+from wordcloud import WordCloud
 
 import warnings
 warnings.simplefilter("ignore")
 
 
-dta = pd.read_pickle("./data/dta.pkl")
-dta.head()
-
-
-## Correcciones ===============================================================
-dta.dropna(axis=0, inplace=True)
-dta["volume_date"] = dta["volume_date"].str.replace(r'[^(]*\(|\)[^)]*', '')
-dta["volume_name"] = dta["volume_name"].str.split(',').str[0]
-dta["year"] = dta["volume_date"].str.split().str[-1]
-# dta["authors"] = dta["authors"].str[1:]
-# dta["authors"] = dta["authors"].str[:-1]
-# dta["authors"] = dta["authors"].str.replace("'", "")
-
-
-## Creación de Keywords =======================================================
-dta["keywords"] = dta["article_name"].str.lower()
-
-# Eliminar palabras
-dta["keywords"] = dta["keywords"] \
-    .str.replace(r"\s*(?<!\w)(?:{})(?!\w)"
-                 .format("|".join([re.escape(x) for x in stops])), " ")
-
-# Eliminar caracteres
-characters = [":", ",", ".", ";", '“','”',"'"]
-
-for c in characters:
-    dta["keywords"] = dta["keywords"].str.replace(c, '')
-
-# Palabras a lista
-dta["keywords"] = dta["keywords"].str.replace(r'\s+', ' ', regex=True)
-dta["keywords"] = dta["keywords"].str.strip()
-dta["keywords"] = [x.split(" ") for x in dta["keywords"]]
-
-# Eliminando el titulo
-dta.drop(["article_name"], axis=1, inplace=True)
+dta = pd.read_pickle("./data/dta_f.pkl")
 
 
 
@@ -96,8 +55,9 @@ ax.xaxis.set_major_locator(ticker.MultipleLocator(3))
 plt.tight_layout()
 
 plt.savefig("./figures/bar-publicaciones-year.pdf")
-plt.savefig("./figures/bar-publicaciones-year.png")
+plt.savefig("./figures/bar-publicaciones-year.eps")
 plt.show()
+
 
 
 ### Wordcloud: Palabras más usadas
@@ -114,11 +74,12 @@ plt.axis("off")
 plt.tight_layout(pad=0)
 
 plt.savefig("./figures/wordcloud-keywords.pdf")
-plt.savefig("./figures/wordcloud-keywords.png")
+plt.savefig("./figures/wordcloud-keywords.eps")
 plt.show()
 
 
 {k: text[k] for k in list(text)[:10]} ### Top 10
+
 
 
 ### Cantidad de apariciones de la palabra "policy"
@@ -141,8 +102,9 @@ ax.xaxis.set_major_locator(ticker.MultipleLocator(3))
 plt.tight_layout()
 
 plt.savefig("./figures/bar-policy-year.pdf")
-plt.savefig("./figures/bar-policy-year.png")
+plt.savefig("./figures/bar-policy-year.eps")
 plt.show()
+
 
 
 ### Cantidad de apariciones de la palabra "growth"
@@ -164,8 +126,9 @@ ax.xaxis.set_major_locator(ticker.MultipleLocator(3))
 plt.tight_layout()
 
 plt.savefig("./figures/bar-growth-year.pdf")
-plt.savefig("./figures/bar-growth-year.png")
+plt.savefig("./figures/bar-growth-year.eps")
 plt.show()
+
 
 
 ### Cantidad de apariciones de la palabra "monetary"
@@ -187,14 +150,15 @@ ax.xaxis.set_major_locator(ticker.MultipleLocator(3))
 plt.tight_layout()
 
 plt.savefig("./figures/bar-monetary-year.pdf")
-plt.savefig("./figures/bar-monetary-year.png")
+plt.savefig("./figures/bar-monetary-year.eps")
 plt.show()
+
 
 
 ### TOP 15 de autores con más publicaciones
 # Separando autores
 authors = dta["authors"].values.tolist()
-authors = [x.split("], ") for x in authors]
+# authors = [x.split("], ") for x in authors]
 authors = sum(authors, [])
 # Limpiando elementos
 authors = [s.replace("[", "") for s in authors]
@@ -219,5 +183,5 @@ ax.xaxis.set_major_locator(ticker.MultipleLocator(2))
 plt.tight_layout()
 
 plt.savefig("./figures/barh-authors.pdf")
-plt.savefig("./figures/barh-authors.png")
+plt.savefig("./figures/barh-authors.eps")
 plt.show()

@@ -4,7 +4,6 @@
 # Voy a trabajar con un entorno virtual llamado `env`. El Driver de Chrome se puede descargar
 # en https://sites.google.com/chromium.org/driver/downloads
 
-
 import pandas as pd
 import utils
 
