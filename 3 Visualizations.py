@@ -55,7 +55,7 @@ ax.xaxis.set_major_locator(ticker.MultipleLocator(3))
 plt.tight_layout()
 
 plt.savefig("./figures/bar-publicaciones-year.pdf")
-plt.savefig("./figures/bar-publicaciones-year.eps")
+plt.savefig("./figures/bar-publicaciones-year.png")
 plt.show()
 
 
@@ -74,7 +74,7 @@ plt.axis("off")
 plt.tight_layout(pad=0)
 
 plt.savefig("./figures/wordcloud-keywords.pdf")
-plt.savefig("./figures/wordcloud-keywords.eps")
+plt.savefig("./figures/wordcloud-keywords.png")
 plt.show()
 
 
@@ -102,7 +102,7 @@ ax.xaxis.set_major_locator(ticker.MultipleLocator(3))
 plt.tight_layout()
 
 plt.savefig("./figures/bar-policy-year.pdf")
-plt.savefig("./figures/bar-policy-year.eps")
+plt.savefig("./figures/bar-policy-year.png")
 plt.show()
 
 
@@ -126,7 +126,7 @@ ax.xaxis.set_major_locator(ticker.MultipleLocator(3))
 plt.tight_layout()
 
 plt.savefig("./figures/bar-growth-year.pdf")
-plt.savefig("./figures/bar-growth-year.eps")
+plt.savefig("./figures/bar-growth-year.png")
 plt.show()
 
 
@@ -150,7 +150,7 @@ ax.xaxis.set_major_locator(ticker.MultipleLocator(3))
 plt.tight_layout()
 
 plt.savefig("./figures/bar-monetary-year.pdf")
-plt.savefig("./figures/bar-monetary-year.eps")
+plt.savefig("./figures/bar-monetary-year.png")
 plt.show()
 
 
@@ -183,5 +183,5 @@ ax.xaxis.set_major_locator(ticker.MultipleLocator(2))
 plt.tight_layout()
 
 plt.savefig("./figures/barh-authors.pdf")
-plt.savefig("./figures/barh-authors.eps")
+plt.savefig("./figures/barh-authors.png")
 plt.show()
