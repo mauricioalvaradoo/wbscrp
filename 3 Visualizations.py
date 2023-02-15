@@ -166,7 +166,7 @@ authors = [s.replace("]", "") for s in authors]
 # Agrupando
 publication_per_author = {x:authors.count(x) for x in authors}
 publication_per_author = dict(sorted(publication_per_author.items(), key=lambda item: item[1], reverse=True))
-# TOP 20
+# TOP 15
 publication_per_author = {k: publication_per_author[k] for k in list(publication_per_author)[:15]}
 y = publication_per_author.keys()
 x = publication_per_author.values()
